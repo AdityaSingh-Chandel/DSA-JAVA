@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if (head.next == null) {
+            return true;
+        }
+        if (head.next != null && head.next.next == null) {
+            return (head.val == head.next.val);
+        }
+        Stack<Integer> myStack = new Stack<>();
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            myStack.push(slow.val);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) { // Handling odd-length linked lists
+            slow = slow.next;
+        }
+        while (!myStack.isEmpty()) { // Jab tak Stack empty nhi ho jaata
+            if (myStack.pop() != slow.val) {
+                return false;
+            }
+            slow = slow.next;
+        }
+        return true;
+    }
+}
